@@ -99,7 +99,7 @@ function addReplicationsOfImage(item,gridpositions){
       imagecontainer.style.order = gridpositions[i];
       imagecontainer.classList.add('image-container')
       imagecontainer.innerHTML=`
-        <img src="./images/img_7.jpg" alt="Dummy Image" class="dummy-image">
+        <img src="./dummy.jpg" alt="Dummy Image" class="dummy-image">
         <img src="${item.url}" id="${item.anime_name+"_"+temp}" alt="${item.anime_name}" class="main-image">
       `;
       container.append(imagecontainer)
@@ -208,18 +208,18 @@ while(random_img?.length<11){
 }
 let images=[];
 for(let i=0;i<10;i++){
-  images.push(`.images/img_${random_img[i]}.jpg`);
+  images.push(`./images/img_${random_img[i]}.jpg`);
  }
  const response = await Promise.all(images.map(img=>fetch(img)));
  const urls = await Promise.all(response.map(res=>res.blob()));
  let urlslength=urls?.length;
  for(let p=0;p<urlslength;p++){
   let temp={}
-  temp["url"]=urls[i];
-  temp["anime_name"]=images[i].split('.jpg')[0];
+  temp["url"]= URL.createObjectURL(urls[p]);
+  temp["anime_name"]=images[p].split('.jpg')[0];
   imagedata.push(temp);
  }
- if(imagesdata.length==10){
+ if(imagedata.length==10){
   addReplications(imagedata);
  }
 }catch(err){
@@ -229,11 +229,12 @@ for(let i=0;i<10;i++){
 
 async function loadLocalData(url = './images'){
   let res=null;
-try{
-   res = await fetch(url)
-}catch(err){
-loadLocalData2();
-}
+  res = await fetch(url);
+   if(!res.ok){
+    loadLocalData2();
+    return;
+   }
+
   let data = ""
 if(url.includes('./images')){
   data = await res.text();
