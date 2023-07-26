@@ -198,22 +198,89 @@ border-bottom: none;
   .image-container {
     grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
   }
-  .intoheadding{
+  .introheadding{
     font-size: 25px;
   }
   .scorecard{
     font-size: 10px;
     display: flex;
-    flex-flow: column wrap;
+    flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
   }
+  .instructions-container>.close{
+    font-size: 15px;
+  }
 }
 
+
 /* For mobile phones */
-@media (max-width: 480px) {
-  .intoheadding{
+@media (max-width: 670px) {
+  #ins>p{
+
     font-size: 15px;
+  }
+  .instructions-container>.close{
+    font-size: 10px;
+  }
+  #ins>p>div>div.close::first-letter{
+    text-transform: capitalize;
+    color: orangered;
+    text-shadow: 2px 2px 0px orangered;
+
+  }
+ 
+}
+@media (max-width: 590px) {
+  #ins>p{
+    font-weight: 100;
+    font-size: 10px;
+  }
+  #ins>p>div>div.close::first-letter{
+    text-transform: capitalize;
+    color: orangered;
+    text-shadow: 1px 1px 0px red;
+  }
+  .introheadding{
+    font-size: 15px;
+  }
+  .scorecard{
+    display: flex;
+    width: 76%;
+    justify-content: space-evenly;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    
+    }
+    div.scorecard div.colmn{
+      display: flex;
+      flex-flow: row nowrap;
+    }
+  .image-container {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  }
+  .footer-container{
+    font-size: 0.6em;
+  }
+}
+@media screen and (max-width: 360px) {
+  #ins>p{
+    font-weight: 200;
+    font-size: 0.4em;
+  }
+  .container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(108px, 1fr));
+    gap: 3px;
+    padding: 3px;
+  }
+  .introheadding{
+    font-size: 10px;
+  }
+  table th,table td{
+    padding: 2px;
+    font-size: 12px;
   }
   .scorecard{
     display: flex;
@@ -221,12 +288,13 @@ border-bottom: none;
     justify-content: center;
     align-items: center;
     font-weight: 50;
-    font-size: 5px;
+    font-size: 8px;
   }
   .image-container {
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(55px, 1fr));
   }
 }
+
 
 
   .image-container {
@@ -242,7 +310,7 @@ border-bottom: none;
     position: absolute;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     overflow: hidden;
     backface-visibility: hidden;
     transition: transform 0.5s;
@@ -250,7 +318,6 @@ border-bottom: none;
   
   .image-container .dummy-image {
     z-index: 1;
-
   }
   
   .image-container.flipped .dummy-image {
@@ -288,56 +355,62 @@ border-bottom: none;
   .container{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(124px, 1fr));
-    gap: 2px;
+    gap: 6px;
     padding: 6px;
-    background-color: #fff;
-   width: 72%;
+    background-color: #bababa;
+   width: 75%;
    height: 60%;
    margin-left: auto;
    margin-right: auto;
   }
-  body>h1{
-    text-align: center;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  
+  body{
+    background: #0F2027;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #2C5364, #203A43, #0F2027); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
     color: #fff;
-    margin: 0;
-    text-transform: capitalize;
-    text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.7);
-    text-decoration-line: underline;
-    font-size: 2em;
-    font-weight: 600;
-    font-family: Poppins;
-  }
+    height: 100%;  
+    }
+    body>h1{
+      text-align: center;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      color: #fff;
+      margin: 0;
+      text-transform: capitalize;
+      text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.7);
+      
+      font-size: 2em;
+      font-weight: 600;
+      font-family: Poppins;
+    }
   .scorecard{
     display: flex;
     flex-flow: row nowrap;
-    font-size: 1.2em;
-    justify-content: space-evenly;
+    font-size: 0.9em;
+    justify-content: space-between;
     color: #fff;
-    font-weight: 500;
+    font-weight: 800;
     letter-spacing: 1px;
     text-shadow: 2px 2px 13px rgba(255,255,255,0.7);
     align-items: center;
-    width: 60%;
+    width: 50%;
     font-family: Poppins;
     margin: 0px auto;
 text-align: left;
   }
-  body{
-background: #0F2027;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #2C5364, #203A43, #0F2027); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-width: 80%;
-margin-left: auto;
-margin-right: auto;
-padding: 0;
-color: #fff;
-height: 100%;  
-}
+ div.colmn{
+  display: flex;
+  flex-flow: row nowrap;
+ }
 .scorecard #timer{
-  display: inline;
+  display: flex;
+  flex-flow: row nowrap;
 }
-.scorecard #timer>span{
+.scorecard #timer>div{
   margin-right: 15px;
 }
 table {
@@ -382,7 +455,7 @@ table tr:hover {
 padding: 2em;
 }
 .scoreCardContiner>*{
-  flex: 1fr 1fr 300px;
+  flex: 1fr 1fr 100px;
 }
 .scoreCardContiner button{
 width: 100px;
@@ -405,21 +478,148 @@ cursor:pointer
 }
 .thankyou{
 border: none;
-margin: 2em auto;
 }
 .thankyou img{
   background-repeat: no-repeat;
-  background-size: cover;
-  object-fit: cover;
+  height: 264px;
+  width: 100%;
   
 }
 .footer-container{
   display: block;
     margin: 15px auto;
     width: 45%;
-    font-size: 1.3em;
+    font-size: 0.9em;
     letter-spacing: 1px;
     font-weight: 400;
     font-family: poppins;
     border-top: 1px solid #bababa;
+}
+/* Add necessary styles for the message dialog box */
+.message {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 400px;
+  padding: 20px;
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  text-align: center;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.close{
+position: relative;
+font-size: 1.5em;
+font-weight: bold;
+color: #fff;
+box-shadow: 0 0 12px rgba(255,255,255,0.7);
+transition: all 0.5s linear;
+width: auto;
+
+border-radius: 10px;
+}
+.close:hover{
+  background-color: red;
+  scale: (1.2,1.2);
+  
+}
+.close:active{
+  background-color: cyan;
+}
+.instructions-overlay{
+  background-color: rgba(0, 0, 0, 1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background-image: url("./dummy.jpg");
+  background-position: center;
+  background-size: cover;
+
+}
+.instructions-container{
+position: relative;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+top: 50%;
+left: 50%;
+transform: translate(-50%,-50%);
+border: 1px solid orangered;
+width: 70%;
+height: 70%;
+padding: 0;
+border-radius: 5px;
+background: transparent;
+}
+.instructions-container>.close{
+  position: absolute;
+    right: -1px;
+    top: -50px;
+    background-color: darkgray;
+    color: red;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 35px;
+    text-align: center;
+    padding: 2px;
+    text-shadow: 2px 2px 3px rgba(11, 106, 214, 0.6);
+    z-index: 13;
+    border-radius: 10px;
+    padding: 3px;
+    width: auto;
+    height: 8%;
+    cursor: pointer;
+    font-family: Poppins;
+}
+#ins>p>div>div.close::first-letter{
+  text-transform: capitalize;
+  color: whitesmoke;
+
+}
+
+#ins>p{
+  text-transform: capitalize;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  font-family: Poppins;
+  position: absolute;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-rendering: optimizeSpeed;
+  width: 100%;
+  height: 100%;
+  /* background-color: black; */
+  color: white;
+  padding: 0 .4em;
+border: 2px solid white;
+margin: 0;
+}
+.relative{
+  position: relative;
+  display: block;
+  width: 10%;
+  height: 10%;
+  text-align: center;
+  right: -8px;
+  margin-top: 10px;
+  cursor: pointer;
+  margin: 10px auto;
+  align-items: flex-end;
+}
+
+#ins>p>span{
+  color:white;
+text-align: left;
+text-transform: capitalize;
+  margin: 2px auto;
+  width: auto;
+  height: 10%;
+  display: block;
+  font-size: 1.5em;
+
 }

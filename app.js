@@ -1,3 +1,4 @@
+
 const APIURL =
     "https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=04c35731a5ee918f014970082a0088b1&page=1";
 const IMGPATH = "https://image.tmdb.org/t/p/w1280";
@@ -23,12 +24,52 @@ let hrsEL=timerEl.querySelector('.hours')
 let isTimerstarted=false;
 let timerInterval=null;
 let imageTypes=['.jpg','.jpeg','.png','.gif'];
-// "https://coffee.alexflipnote.dev/random",
-// "https://coffee.alexflipnote.dev/random.json",
-// `https://api.waifu.im/search/?included_tags=selfies`
+const inselm = document.getElementById("ins");
 let apiArray=[`https://nekos.best/api/v2/${categories[Math.floor(Math.random()*categories.length)]}?amount=10`]
 let proxyurl=`https://cors-anywhere.herokuapp.com/`
 let footer_container = document.getElementsByClassName('footer-container')[0];
+let instruction_container=document.getElementsByClassName("instructions-container")[0];
+let ins_close=instruction_container.querySelector(".close");
+const audio = document.getElementById("myAudio");
+ins_close.addEventListener("click",(e)=>{
+e.target.parentElement.parentElement.remove();
+  //prompt for using local images 
+  container.style.display="none";
+  playWithYourOwnImages();
+    // Check for landscape mode on page load
+  if (window.matchMedia("(orientation:protrait)").matches) {
+    // Not in landscape mode, show the message dialog
+    showMessageDialog();
+  }
+})
+function displayInstructions(){
+  let paras = inselm.querySelectorAll("p");
+  // sorting params in order to add z-index in correct order
+  let startindex=0;
+  let endindex=paras.length-1;
+  while(startindex<endindex){
+    [paras[startindex],paras[endindex]]=[paras[endindex],paras[startindex]];
+    startindex += 1;
+    endindex -= 1;
+  }
+  paras.forEach((para,ind,arr)=>{
+    let relative=document.createElement("div");
+    relative.classList.add("relative")
+    let closebtn = document.createElement("div");
+    closebtn.innerText="X";
+    relative.appendChild(closebtn);
+    closebtn.classList.add("close");
+    closebtn.addEventListener("click",(e)=>{
+      e.target.parentElement.parentElement.remove();
+      if(!ins_close.parentElement.querySelector("#ins").children.length){
+        ins_close.click();
+      }
+    });
+    para.prepend(relative);
+    para.style.zIndex = arr.length-ind;
+  });
+}
+
 function getTimer(totalsec){
 let hrs = Math.floor(totalsec/60/60);
 let mins = Math.floor(totalsec/60);
@@ -94,7 +135,7 @@ function dropHandler(event) {
 
 function addReplicationsOfImage(item,gridpositions){
       for(let i=0;i<3;i++){
-      let temp=i+1  
+      let temp=i+1;  
       let imagecontainer = document.createElement('div');
       imagecontainer.style.order = gridpositions[i];
       imagecontainer.classList.add('image-container')
@@ -129,7 +170,7 @@ function addReplicationsOfImage(item,gridpositions){
             score++;
             scoreEl.innerHTML=`${score} `;
           container.querySelectorAll('.flipped').forEach(elm=>{
-              elm.classList.remove('flipped');
+            elm.classList.remove('flipped');
               elm.classList.add('completed');
              });
              if(container.querySelectorAll('.completed').length == container.querySelectorAll('.image-container').length){
@@ -168,34 +209,9 @@ function addReplicationsOfImage(item,gridpositions){
   }
 
   const fileInput = document.getElementById('fileInput');
-  const imageArray = [];
+  let imageArray = [];
   
-  fileInput.addEventListener('change', function() {
-    const selectedFiles = fileInput.files;
-    if (selectedFiles.length > 0) {
-      for (let i = 0; i < Math.min(selectedFiles.length, 30); i++) {
-        const file = selectedFiles[i];
-        const newName = `img_${i + 1}.jpg`;
-  
-        // Create an object with the desired format
-        const imageObj = {
-          url: URL.createObjectURL(file),
-          anime_name: newName,
-        };
-  
-        // Add the object to the array
-        imageArray.push(imageObj);
-      }
-    }
-if(imageArray.length<10){
-  let cnt=10-imageArray.length
-  let prestr = cnt>1?"images":"image"
-  alert(`add ${cnt} more ${prestr}`);
-}else{
-  let imagedata = imageArray?.slice(0,10);
-  addReplications(imagedata);
-}
-});
+ 
   
   
 
@@ -247,21 +263,23 @@ console.log(data);
 let totalimages = 10;
 let parser  = new DOMParser();
 let doc = parser.parseFromString(data,'text/html');
-// let positions=getRandomPositionsArray(30)
-// let i=0;
-//doc.querySelectorAll('img') ||
 let imageelements =  doc.querySelectorAll('a[href$=".jpg"], a[href$=".jpeg"], a[href$=".png"], a[href$=".gif"]');
-let images = Array.from(imageelements).map(elm=>{return {
+let images = Array.from(imageelements).map(elm=>{
+  let str = elm.getAttribute("href");
+  return {
   // "url":".".concat(elm.getAttribute("href").split('/brainmemorizationgame')[1]),
-  "url":".".concat(elm.getAttribute("href")),
+  "url":"./images/".concat(str.slice(str.indexOf("img_"))),
   // "anime_name":elm.getAttribute("href").split('/brainmemorizationgame/images/')[1].split(".")[0]}});
-  "anime_name":elm.getAttribute("href").split('/images/')[1].split(".")[0]}});
+  "anime_name":str.split(".jpg")[0]}});
 let imagedata = images?images.slice(0,10):data.results.slice(0,10);
 addReplications(imagedata);
 }
+
 // need to fetch images using complete path to each image 
-loadLocalData();
+// loadLocalData();
+
 function addReplications(images){
+  container.style.display="grid";
   container.innerHTML="";
   let positions = getRandomPositionsArray(30);
   let i=0;  
@@ -269,6 +287,7 @@ images.forEach(image=>{addReplicationsOfImage(image,positions.slice(i,i+3));
   i=i+3;
 })
 }
+
 async function loadImages(){
     let response = await fetch('https://cors-anywhere.herokuapp.com/'+apiArray[0])
     let data = await response.json();
@@ -303,13 +322,13 @@ function displayScoreCard()
   </tbody>
   </table>
   <div class="thankyou">
-   <img src="./images/thankyou${Math.floor((Math.random()*3)+1)}.gif">
+   <img src="./gameover.jpg">
   </div>
   </div>`  
 document.body.append(overlay);
 }
 function startGame(){
-document.body.appendChild(footer_container.remove());
+  document.body.appendChild(footer_container);
   imageArray=[];
   document.querySelector('.overlay').remove();
   container.classList.remove('hideelm');
@@ -323,7 +342,8 @@ document.body.appendChild(footer_container.remove());
   score=0;
   scoreEl.innerText=score;
   // loadLocalData('https://cors-anywhere.herokuapp.com/'+apiArray[0]);
-  loadLocalData();
+  // loadLocalData();
+  playWithYourOwnImages();
 }
 //need to add bg music
 function playSound(){
@@ -331,5 +351,129 @@ function playSound(){
   document.body.appendChild(audio);
   audio.play();
 }
+
+// Set to store the hashes of accepted images
+let  acceptedImageHashes = new Set();
+
+        function calculateImageHash(imageBytes) {
+            // Convert the Uint8Array to a WordArray
+            var wordArray = CryptoJS.lib.WordArray.create(imageBytes);
+
+            // Calculate the SHA-256 hash
+            var sha256Hash = CryptoJS.SHA256(wordArray).toString();
+            return sha256Hash;
+        }
+
+        function isDuplicateImage(imageHash) {
+            // Check if the image hash exists in the set of accepted hashes
+            return acceptedImageHashes.has(imageHash);
+        }
+
+        function acceptImage(imageBytes) {
+            var imageHash = calculateImageHash(imageBytes);
+
+            if (isDuplicateImage(imageHash)) {
+                console.log("Duplicate image. Rejected.");
+                return false;
+            }
+
+            // Process the image (you can save it, display it, etc.)
+            // ...
+
+            // Add the image hash to the set of accepted hashes
+            acceptedImageHashes.add(imageHash);
+            console.log("Image accepted.");
+            return true;
+        }
+
+        function handleImageChange(event) {
+            var imageFiles = event.target.files;
+
+            for (var i = 0; i < imageFiles.length; i++) {
+               
+            }
+        }
+        fileInput.addEventListener('change', function() {
+          const selectedFiles = fileInput.files;
+          if (selectedFiles.length > 0) {
+            for (let i = 0; i < Math.min(selectedFiles.length, 30); i++) {
+              const file = selectedFiles[i];
+              var reader = new FileReader();
+              reader.onload = function (e) {
+                  var imageBytes = new Uint8Array(e.target.result);
+                  if(acceptImage(imageBytes)){
+                    const newName = `img_${imageArray?.length?imageArray?.length+1 : i+1}.jpg`;
+        
+                    // Create an object with the desired format
+                    const imageObj = {
+                      url: URL.createObjectURL(file),
+                      anime_name: newName,
+                    };
+              
+                    // Add the object to the array
+                    imageArray.push(imageObj);
+                  }else{
+                    alert("should not addd duplicate images");
+                  }
+                  
+                };
+              reader.readAsArrayBuffer(file);
+              
+            }
+          }
+     setTimeout(()=>{
+      if(imageArray.length<10){
+        let cnt=10-imageArray.length
+        let prestr = cnt>1?"images":"image"
+        alert(`add ${cnt} more ${prestr}`);
+      }else{
+        footer_container.remove();
+        let imagedata = imageArray?.slice(0,10);
+        addReplications(imagedata);
+      }
+     },1000)
+      });
 //need to display ucam video to local user
 //push all u cam video streems firebase 
+
+// adding dialogue message on DOMContentLoaded
+function showMessageDialog() {
+  // Show the message dialog box
+  var messageDialog = document.getElementById('landscapeMessage');
+  messageDialog.style.display = 'block';
+
+  // Listen for orientation changes
+  window.addEventListener('orientationchange', orientationChangeListener);
+
+  // Disable scrolling while the message is shown
+  document.body.style.overflow = 'hidden';
+}
+
+function orientationChangeListener() {
+  // Check the current orientation
+  if (window.matchMedia("(orientation:landscope)").matches) {
+      // Landscape mode, hide the message and re-enable scrolling
+      var messageDialog = document.getElementById('landscapeMessage');
+      messageDialog.style.display = 'none';
+      document.body.style.overflow = 'auto';
+
+      // Remove the orientation change listener
+      window.removeEventListener('orientationchange', orientationChangeListener);
+  }
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  displayInstructions();
+});
+//prompt for playing with own images
+function playWithYourOwnImages(){
+  const decision = window.confirm("want to play with own images?");
+  if(decision){
+    alert("use upload button forusing loacal images")
+    acceptedImageHashes= new Set([]);
+  }else{
+    loadLocalData();
+  }
+  
+  audio.play();
+}
