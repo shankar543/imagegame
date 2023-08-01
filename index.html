@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,72 +10,96 @@
     <link rel="stylesheet" href="styles.css">
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/fontawesome.min.css" integrity="sha512-cHxvm20nkjOUySu7jdwiUxgGy11vuVPE9YeK89geLMLMMEOcKFyS2i+8wo0FOwyQO/bL8Bvq1KMsqK4bbOsPnA==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
 
-    
+
 </head>
+
 <body>
     <h1 class="introheadding">
-train your grasping power
+        train your grasping power
     </h1>
     <div class="scorecard">
-        <div class="colmn"><div for="score">score:</div> <div id="score">0</div></div>
-        <div class="colmn"><div for="moves">moves:</div> <div id="moves">0</div></div>
-        <div class="colmn"><div for="timer">timer:</div> <div id="timer">hr:<div class="hours">0</div>min:<div class="minutes">0</div>sec: <div class="seconds">0</div></div> </div>
+        <div class="colmn">
+            <div for="score">score:</div>
+            <div id="score">0</div>
+        </div>
+        <div class="colmn">
+            <div for="moves">moves:</div>
+            <div id="moves">0</div>
+        </div>
+        <div class="colmn">
+            <div for="timer">timer:</div>
+            <div id="timer">hr:<div class="hours">0</div>min:<div class="minutes">0</div>sec: <div class="seconds">0
+                </div>
+            </div>
+        </div>
 
     </div>
-   <div class="container"></div>
-   <footer>
-   <div class="footer-container">
-    <div for="fileInput">upload 10 images of your choice:</div> <br> <input type="file" id="fileInput" multiple>
-   </div>
-   </footer>
-
-   <div class="instructions-overlay">
-    <div class="instructions-container">
-    <div class="close">close</div>
-    <div id="ins">
-<p class="objective">
-    <span>objective</span>
-    Your objective in this game is to find matching triplets of images by flipping the cards. Each correct match will earn you a point. The more points you score, the better!
-</p>
-<p class="gamesetup">
-    <span>gamesetup</span>
-1.There are a total of 10 different images in the container, with each image appearing 3 times. That makes a total of 30 cards for you to flip.
-</p>
-<p class="gameplay">
-    <span>gameplay</span>
-1.To flip a card, simply click on it. Clicking on a card will reveal the image on the other side. Remember, each click counts as one flip. <br> 
-
-2.You can click on two more cards to reveal their images as well, trying to find three cards with the same image. <br>
-
-3.When you successfully find three cards with matching images, all three cards will be removed from the container, and you will earn one point. <br>
-
-4.If the three cards you flipped don't match, they will be flipped back face down. <br>
-
-5.Keep flipping cards to find more matching triplets. Pay attention to the cards you've already flipped to improve your chances of finding matches. <br>
-</p>
-<p class="scoring">
-    <span>scoring</span>
-    Each correct match (finding a triplet of identical images) will earn you one point. <br>
-</p>
-<p class="timer">
-    <span>timer</span>
-The timer will start counting as soon as you begin the game and will continue running until you decide to end the game. <br>
-You will see the elapsed time in seconds, minutes, or hours, depending on how long you take to complete the game.
-</p>
-<p class="restarting">
-    <span>restarting</span>
-After the game ends, you can choose to play again.. <br>
-Get ready to test your memory and matching skills in the Cards Flip Game. Have fun, and let the flipping begin! <br>
-</p>
+    <div class="container"></div>
+    <footer>
+        <div class="footer-container">
+            <div for="fileInput">upload 10 images of your choice:</div> <br> <input type="file" id="fileInput" multiple>
+        </div>
+    </footer>
+    <div id="landscapeMessage">
+        <p>please rotate your mobile to play the game</p>
     </div>
+    <div class="instructions-overlay">
+        <div class="instructions-container">
+            <div class="close">close</div>
+            <div id="ins">
+                <p class="objective">
+                    <span>objective</span>
+                    Your objective in this game is to find matching triplets of images by flipping the cards. Each
+                    correct match will earn you a point. The more points you score, the better!
+                </p>
+                <p class="gamesetup">
+                    <span>gamesetup</span>
+                    1.There are a total of 10 different images in the container, with each image appearing 3 times. That
+                    makes a total of 30 cards for you to flip.
+                </p>
+                <p class="gameplay">
+                    <span>gameplay</span>
+                    1.To flip a card, simply click on it. Clicking on a card will reveal the image on the other side.
+                    Remember, each click counts as one flip. <br>
+
+                    2.You can click on two more cards to reveal their images as well, trying to find three cards with
+                    the same image. <br>
+
+                    3.When you successfully find three cards with matching images, all three cards will be removed from
+                    the container, and you will earn one point. <br>
+
+                    4.If the three cards you flipped don't match, they will be flipped back face down. <br>
+
+                    5.Keep flipping cards to find more matching triplets. Pay attention to the cards you've already
+                    flipped to improve your chances of finding matches. <br>
+                </p>
+                <p class="scoring">
+                    <span>scoring</span>
+                    Each correct match (finding a triplet of identical images) will earn you one point. <br>
+                </p>
+                <p class="timer">
+                    <span>timer</span>
+                    The timer will start counting as soon as you begin the game and will continue running until you
+                    decide to end the game. <br>
+                    You will see the elapsed time in seconds, minutes, or hours, depending on how long you take to
+                    complete the game.
+                </p>
+                <p class="restarting">
+                    <span>restarting</span>
+                    After the game ends, you can choose to play again.. <br>
+                    Get ready to test your memory and matching skills in the Cards Flip Game. Have fun, and let the
+                    flipping begin! <br>
+                </p>
+            </div>
+        </div>
     </div>
-</div>
 
-<audio id="myAudio" src="./audios/bgm.mp3" loop></audio>
+    <audio id="myAudio" src="./audios/bgm.mp3" loop></audio>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-   <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> -->
     <script src="app.js"></script>
 
 </body>
+
 </html>

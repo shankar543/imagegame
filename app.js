@@ -33,13 +33,11 @@ let ins_close=instruction_container.querySelector(".close");
 const audio = document.getElementById("myAudio");
 ins_close.addEventListener("click",(e)=>{
 e.target.parentElement.parentElement.remove();
-  //prompt for using local images 
+ 
   container.style.display="none";
   playWithYourOwnImages();
-    // Check for landscape mode on page load
-  if (window.matchMedia("(orientation:protrait)").matches) {
-    // Not in landscape mode, show the message dialog
     showMessageDialog();
+  if (window.matchMedia("(orientation:protrait)").matches) {
   }
 })
 function displayInstructions(){
@@ -52,22 +50,22 @@ function displayInstructions(){
     startindex += 1;
     endindex -= 1;
   }
-  paras.forEach((para,ind,arr)=>{
-    let relative=document.createElement("div");
-    relative.classList.add("relative")
-    let closebtn = document.createElement("div");
-    closebtn.innerText="X";
-    relative.appendChild(closebtn);
-    closebtn.classList.add("close");
-    closebtn.addEventListener("click",(e)=>{
-      e.target.parentElement.parentElement.remove();
-      if(!ins_close.parentElement.querySelector("#ins").children.length){
-        ins_close.click();
-      }
-    });
-    para.prepend(relative);
-    para.style.zIndex = arr.length-ind;
-  });
+  // paras.forEach((para,ind,arr)=>{
+  //   let relative=document.createElement("div");
+  //   relative.classList.add("relative")
+  //   let closebtn = document.createElement("div");
+  //   closebtn.innerText="X";
+  //   relative.appendChild(closebtn);
+  //   closebtn.classList.add("close");
+  //   closebtn.addEventListener("click",(e)=>{
+  //     e.target.parentElement.parentElement.remove();
+  //     if(!ins_close.parentElement.querySelector("#ins").children.length){
+  //       ins_close.click();
+  //     }
+  //   });
+  //   para.prepend(relative);
+  //   para.style.zIndex = arr.length-ind;
+  // });
 }
 
 function getTimer(totalsec){
@@ -83,7 +81,7 @@ secEL.innerText=secs;
 }
 
 function startTimer(){
-  scorecardTitle.classList.remove("hideelm");
+  scorecardTitle.classList.remove("hidden");
 if(isTimerstarted)return;
 isTimerstarted=true;
 timer.totalsec=0;
@@ -93,45 +91,39 @@ getTimer(timer.totalsec);
 },1000);
 }
 
-function initImages(){
+// async function loadPopiularImages(){
+//     if(sidebarImageContainer.children.length>30){
+//         return;
+//     }
+// let response =await  fetch(APIURL);
+// let result = await response.json();
+// movies = result.results;
+// movies.forEach(movie => {
+//     let {poster_path,title,adult,release_date,overview,vote_average} = movie;
+//     if(!poster_path){return;}
+//     let imgEL = document.createElement("img");
+//     if(poster_path && !adult & vote_average>7){
+//        imgEL.src=IMGPATH+poster_path
+//        imgEL.addEventListener("dragstart",dragStartHandler)
+//        imgEL.setAttribute("id",title);
+//        imgEL.setAttribute("draggable",true);
+//        imgEL.setAttribute('data-info',overview);
+//        sidebarImageContainer.appendChild(imgEL);
+//     }
+// });
+// }
 
-        sidebarImageContainer= document.querySelector(".imagecontainer")
-        loadPopiularImages();
-      
-}
-async function loadPopiularImages(){
-    if(sidebarImageContainer.children.length>30){
-        return;
-    }
-let response =await  fetch(APIURL);
-let result = await response.json();
-movies = result.results;
-movies.forEach(movie => {
-    let {poster_path,title,adult,release_date,overview,vote_average} = movie;
-    if(!poster_path){return;}
-    let imgEL = document.createElement("img");
-    if(poster_path && !adult & vote_average>7){
-       imgEL.src=IMGPATH+poster_path
-       imgEL.addEventListener("dragstart",dragStartHandler)
-       imgEL.setAttribute("id",title);
-       imgEL.setAttribute("draggable",true);
-       imgEL.setAttribute('data-info',overview);
-       sidebarImageContainer.appendChild(imgEL);
-    }
-});
-}
-
-function dragStartHandler(event) {
-    event.dataTransfer.setData("text/plain", event.target.id);
-}
+// function dragStartHandler(event) {
+//     event.dataTransfer.setData("text/plain", event.target.id);
+// }
   
 
-function dropHandler(event) {
-    event.preventDefault();
-    var imageId = event.dataTransfer.getData("text");
-    imageIdArray.push(imageId);
-    var image = document.getElementById(imageId);
-}
+// function dropHandler(event) {
+//     event.preventDefault();
+//     var imageId = event.dataTransfer.getData("text");
+//     imageIdArray.push(imageId);
+//     var image = document.getElementById(imageId);
+// }
 
 function addReplicationsOfImage(item,gridpositions){
       for(let i=0;i<3;i++){
@@ -161,9 +153,9 @@ function addReplicationsOfImage(item,gridpositions){
           imagecontainer.classList.add('flipped');
       }
       else if(bingo.id && bingo.id==currentTargetId.slice(0,currentTargetId.lastIndexOf("_"))){
-          if(bingo.imagenumber.indexOf(currentTargetId.slice(-1))!=-1){
-            return
-          }
+          // if(bingo.imagenumber.indexOf(currentTargetId.slice(-1))!=-1){
+          //   return
+          // }
           imagecontainer.classList.add('flipped');
           bingo.imagenumber.push(currentTargetId.slice(-1))
           if(bingo.imagenumber.length>2){
@@ -179,8 +171,7 @@ function addReplicationsOfImage(item,gridpositions){
               displayScoreCard();
              }
            bingo=null;
-           playSound()
-              
+            
           }
       }else{
         imagecontainer.classList.add('flipped');
@@ -265,10 +256,10 @@ let parser  = new DOMParser();
 let doc = parser.parseFromString(data,'text/html');
 let imageelements =  doc.querySelectorAll('a[href$=".jpg"], a[href$=".jpeg"], a[href$=".png"], a[href$=".gif"]');
 let images = Array.from(imageelements).map(elm=>{
-  let str = elm.getAttribute("href");
+  let str = elm.getAttribute("href").slice(elm.getAttribute("href").indexOf("img_"))
   return {
   // "url":".".concat(elm.getAttribute("href").split('/brainmemorizationgame')[1]),
-  "url":"./images/".concat(str.slice(str.indexOf("img_"))),
+  "url":"./images/".concat(str),
   // "anime_name":elm.getAttribute("href").split('/brainmemorizationgame/images/')[1].split(".")[0]}});
   "anime_name":str.split(".jpg")[0]}});
 let imagedata = images?images.slice(0,10):data.results.slice(0,10);
@@ -356,16 +347,12 @@ function playSound(){
 let  acceptedImageHashes = new Set();
 
         function calculateImageHash(imageBytes) {
-            // Convert the Uint8Array to a WordArray
             var wordArray = CryptoJS.lib.WordArray.create(imageBytes);
-
-            // Calculate the SHA-256 hash
             var sha256Hash = CryptoJS.SHA256(wordArray).toString();
             return sha256Hash;
         }
 
         function isDuplicateImage(imageHash) {
-            // Check if the image hash exists in the set of accepted hashes
             return acceptedImageHashes.has(imageHash);
         }
 
@@ -376,11 +363,6 @@ let  acceptedImageHashes = new Set();
                 console.log("Duplicate image. Rejected.");
                 return false;
             }
-
-            // Process the image (you can save it, display it, etc.)
-            // ...
-
-            // Add the image hash to the set of accepted hashes
             acceptedImageHashes.add(imageHash);
             console.log("Image accepted.");
             return true;
@@ -393,7 +375,8 @@ let  acceptedImageHashes = new Set();
                
             }
         }
-        fileInput.addEventListener('change', function() {
+        
+fileInput.addEventListener('change', function () {
           const selectedFiles = fileInput.files;
           if (selectedFiles.length > 0) {
             for (let i = 0; i < Math.min(selectedFiles.length, 30); i++) {
@@ -433,15 +416,16 @@ let  acceptedImageHashes = new Set();
       }
      },1000)
       });
-//need to display ucam video to local user
-//push all u cam video streems firebase 
 
 // adding dialogue message on DOMContentLoaded
 function showMessageDialog() {
   // Show the message dialog box
   var messageDialog = document.getElementById('landscapeMessage');
   messageDialog.style.display = 'block';
-
+  setTimeout(() => {
+    messageDialog.style.display = "none";
+    document.body.style.overflow = 'auto';
+},5000)
   // Listen for orientation changes
   window.addEventListener('orientationchange', orientationChangeListener);
 
@@ -451,19 +435,21 @@ function showMessageDialog() {
 
 function orientationChangeListener() {
   // Check the current orientation
-  if (window.matchMedia("(orientation:landscope)").matches) {
-      // Landscape mode, hide the message and re-enable scrolling
-      var messageDialog = document.getElementById('landscapeMessage');
-      messageDialog.style.display = 'none';
-      document.body.style.overflow = 'auto';
+ if (window.matchMedia("(orientation: landscape)").matches) {
+  // Landscape mode, hide the message and re-enable scrolling
+  var messageDialog = document.getElementById('landscapeMessage');
+  messageDialog.style.display = 'none';
+  document.body.style.overflow = 'auto';
 
-      // Remove the orientation change listener
-      window.removeEventListener('orientationchange', orientationChangeListener);
-  }
+  // Remove the orientation change listener (optional)
+  // window.removeEventListener('orientationchange', orientationChangeListener);
+}
+
 }
 
 document.addEventListener('DOMContentLoaded',()=>{
-  displayInstructions();
+  // displayInstructions();
+  isInMobileView();
 });
 //prompt for playing with own images
 function playWithYourOwnImages(){
@@ -471,9 +457,22 @@ function playWithYourOwnImages(){
   if(decision){
     alert("use upload button forusing loacal images")
     acceptedImageHashes= new Set([]);
-  }else{
+  } else {
+    footer_container.remove();
     loadLocalData();
+
   }
-  
-  audio.play();
+}
+function isInMobileView() {
+  const mobileQuery = window.matchMedia('(max-width: 768px)');
+  if (mobileQuery.matches) {
+    return true; // It's a mobile device
+  } else {
+    return false; // It's not a mobile device (could be tablet, desktop, etc.)
+  }
+}
+if (isInMobileView()) {
+  showMessageDialog();
+} else {
+displayInstructions()
 }
