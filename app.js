@@ -153,9 +153,9 @@ function addReplicationsOfImage(item,gridpositions){
           imagecontainer.classList.add('flipped');
       }
       else if(bingo.id && bingo.id==currentTargetId.slice(0,currentTargetId.lastIndexOf("_"))){
-          // if(bingo.imagenumber.indexOf(currentTargetId.slice(-1))!=-1){
-          //   return
-          // }
+          if(bingo.imagenumber.indexOf(currentTargetId.slice(-1))!=-1){
+            return
+          }
           imagecontainer.classList.add('flipped');
           bingo.imagenumber.push(currentTargetId.slice(-1))
           if(bingo.imagenumber.length>2){
