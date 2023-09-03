@@ -210,10 +210,11 @@ async function loadLocalData2(){
 try{
   let random_img=[];
 const imagedata=[];
+let imageset = new Set([random_img]);
   while (random_img?.length < 11) {
-    let imageset = new Set([random_img]);
     let newRandomImage = Math.floor(Math.random() * 30 + 1);
     if (!imageset.has(newRandomImage)) {
+      imageset.add(newRandomImage);
       random_img.push(newRandomImage);    
     }
   
