@@ -130,7 +130,7 @@ function addReplicationsOfImage(item,gridpositions){
       let temp=i+1;  
       let imagecontainer = document.createElement('div');
       imagecontainer.style.order = gridpositions[i];
-      imagecontainer.classList.add('image-container')
+      imagecontainer.classList.add('image-container');
       imagecontainer.innerHTML=`
         <img src="./dummy.jpg" alt="Dummy Image" class="dummy-image">
         <img src="${item.url}" id="${item.anime_name+"_"+temp}" alt="${item.anime_name}" class="main-image">
@@ -210,8 +210,13 @@ async function loadLocalData2(){
 try{
   let random_img=[];
 const imagedata=[];
-while(random_img?.length<11){
-  random_img.push(Math.floor(Math.random()*30+1));
+  while (random_img?.length < 11) {
+    let imageset = new Set([random_img]);
+    let newRandomImage = Math.floor(Math.random() * 30 + 1);
+    if (!imageset.has(newRandomImage)) {
+      random_img.push(newRandomImage);    
+    }
+  
 }
 let images=[];
 for(let i=0;i<10;i++){
@@ -262,8 +267,24 @@ let images = Array.from(imageelements).map(elm=>{
   "url":"./images/".concat(str),
   // "anime_name":elm.getAttribute("href").split('/brainmemorizationgame/images/')[1].split(".")[0]}});
   "anime_name":str.split(".jpg")[0]}});
-let imagedata = images?images.slice(0,10):data.results.slice(0,10);
+let imagedata = images?getRandomImageData(images):data.results.slice(0,10);
 addReplications(imagedata);
+}
+function getRandomImageData(images) {
+  let randomImages = [];
+  // images.slice(0,10)
+  let cnt = images.length;
+  let randintset = new Set();
+  while (randomImages.length != 10) {
+    let randint = Math.floor(Math.random() * cnt);
+    if (!randintset.has(randint)) {
+      randintset.add(randint);
+      randomImages.push(images[randint]);
+    }
+  }
+  if (randomImages.length == 10) {
+    return randomImages;
+  }
 }
 
 // need to fetch images using complete path to each image 
@@ -301,6 +322,7 @@ function getRandomPositionsArray(size){
 function displayScoreCard()
 {
   container.classList.add('hideelm');
+  container.style.display="none";
   scorecardTitle.classList.add("hideelm");
   let overlay = document.createElement('div');
   overlay.classList.add('overlay');
@@ -464,7 +486,7 @@ function playWithYourOwnImages(){
   }
 }
 function isInMobileView() {
-  const mobileQuery = window.matchMedia('(max-width: 768px)');
+  const mobileQuery = window.matchMedia('(max-width: 500px)');
   if (mobileQuery.matches) {
     return true; // It's a mobile device
   } else {
@@ -474,5 +496,5 @@ function isInMobileView() {
 if (isInMobileView()) {
   showMessageDialog();
 } else {
-displayInstructions()
+  displayInstructions();
 }
